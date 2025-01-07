@@ -119,10 +119,11 @@ function updateHourlyForecast(hourlyData) {
 
         // إذا كانت الساعة 23:30، نعرض التنبؤات للأربع ساعات القادمة
         if (currentHour === 23 && currentMinute >= 30) {
+            // نأخذ الساعات من 00:00 إلى 03:00 من اليوم التالي
             const nextHours = hourlyData.filter(hour => {
                 const hourTime = new Date(hour.time).getHours();
-                return hourTime > currentHour || (hourTime === 0 && currentHour === 23);
-            }).slice(0, 4);
+                return hourTime >= 0 && hourTime <= 3; // نأخذ الساعات من 00:00 إلى 03:00
+            }).slice(0, 4); // نأخذ أول 4 ساعات
 
             hourlyContainer.innerHTML = nextHours.map(hour => `
                 <div class="hourly-forecast-item text-center">
