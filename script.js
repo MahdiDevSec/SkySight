@@ -117,7 +117,7 @@ function updateHourlyForecast(hourlyData) {
         const currentHour = new Date().getHours();
         const nextHours = hourlyData.filter(hour => {
             const hourTime = new Date(hour.time).getHours();
-            return hourTime > currentHour;
+            return (hourTime > currentHour || hourTime < currentHour -24)
         }).slice(0, 5);
 
         hourlyContainer.innerHTML = nextHours.map(hour => `
