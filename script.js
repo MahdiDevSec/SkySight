@@ -118,7 +118,7 @@ function updateHourlyForecast(hourlyData) {
         const nextHours = hourlyData.filter(hour => {
             const hourTime = new Date(hour.time).getHours();
             return hourTime > currentHour;
-        }).slice(0, 4);
+        }).slice(0, 5);
 
         hourlyContainer.innerHTML = nextHours.map(hour => `
             <div class="hourly-forecast-item text-center">
