@@ -115,17 +115,35 @@ function updateHourlyForecast(hourlyData) {
     const hourlyContainer = document.querySelector('.hourly-forecast');
     if (hourlyContainer) {
         const currentHour = new Date().getHours();
-        const nextHours = hourlyData.filter(hour => {
-            const hourTime = new Date(hour.time).getHours();
-            return (hourTime > currentHour || hourTime < currentHour -24)
-        }).slice(0, 5);
+        const currentMinute = new Date().getMinutes();
 
-        hourlyContainer.innerHTML = nextHours.map(hour => `
-            <div class="hourly-forecast-item text-center">
-                <div class="text-sm">${new Date(hour.time).toLocaleTimeString('en-US', { hour: '2-digit' })}</div>
-                <div class="font-bold">${Math.round(hour.temp_c)}°C</div>
-            </div>
-        `).join('');
+        // إذا كانت الساعة 23:30، نعرض التنبؤات للأربع ساعات القادمة
+        if (currentHour === 23 && currentMinute >= 30) {
+            const nextHours = hourlyData.filter(hour => {
+                const hourTime = new Date(hour.time).getHours();
+                return hourTime > currentHour || (hourTime === 0 && currentHour === 23);
+            }).slice(0, 4);
+
+            hourlyContainer.innerHTML = nextHours.map(hour => `
+                <div class="hourly-forecast-item text-center">
+                    <div class="text-sm">${new Date(hour.time).toLocaleTimeString('en-US', { hour: '2-digit' })}</div>
+                    <div class="font-bold">${Math.round(hour.temp_c)}°C</div>
+                </div>
+            `).join('');
+        } else {
+            // إذا لم تكن الساعة 23:30، نعرض التنبؤات للأربع ساعات القادمة بشكل طبيعي
+            const nextHours = hourlyData.filter(hour => {
+                const hourTime = new Date(hour.time).getHours();
+                return hourTime > currentHour;
+            }).slice(0, 4);
+
+            hourlyContainer.innerHTML = nextHours.map(hour => `
+                <div class="hourly-forecast-item text-center">
+                    <div class="text-sm">${new Date(hour.time).toLocaleTimeString('en-US', { hour: '2-digit' })}</div>
+                    <div class="font-bold">${Math.round(hour.temp_c)}°C</div>
+                </div>
+            `).join('');
+        }
     }
 }
 
