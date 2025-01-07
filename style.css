@@ -1,0 +1,39 @@
+.weather-card {
+    transition: all 0.3s ease;
+}
+
+.temperature-display {
+    font-size: 5rem;
+    line-height: 1;
+}
+
+.forecast-item {
+    transition: transform 0.2s;
+}
+
+.forecast-item:hover {
+    transform: scale(1.05);
+}
+
+.hourly-forecast {
+    border-radius: 20px;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.news-card {
+    transition: transform 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.news-card:hover {
+    transform: translateY(-4px);
+}
+
+
+@media (max-width: 640px) {
+    .temperature-display {
+        font-size: 3rem;
+    }
+}

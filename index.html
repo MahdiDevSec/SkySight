@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkySight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class'
+    }
+</script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen p-4 transition-colors duration-300">
+
+    <div class="container mx-auto max-w-4xl mb-6">
+        <div class="flex gap-2">
+            <input 
+                type="text" 
+                id="citySearch" 
+                placeholder="Search for a city..." 
+                class="w-64 p-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400 focus:w-96 transition-all duration-300 ease-in-out"
+            >
+            <button 
+                id="autoLocate" 
+                class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 rounded-lg hover:from-blue-500 hover:to-blue-700 transition-all duration-300 shadow-md"
+                title="Auto locate"
+            >
+                <i class="fas fa-location-arrow"></i>
+            </button>
+             <!-- New dark mode toggle button -->
+            <button 
+                id="darkModeToggle" 
+                class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 transition-colors duration-300"
+            >
+                <i class="fas fa-moon dark:text-white"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="container mx-auto max-w-4xl dark:bg-gray-800 dark:text-white transition-all duration-300">
+        <!-- Weather Card Container -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl transition-all duration-300 overflow-hidden">
+        <!-- Upper Section - White Background -->
+        <div class="p-6 dark:text-white">
+            <div class="flex justify-center items-center gap-8">
+                <div class="temperature-display text-8xl font-bold text-center">24°C</div>
+                <div class="right">
+                    <div data-wind class="text-gray-600 dark:text-gray-300 text-lg mb-2">
+                        <i class="fas fa-wind mr-2"></i>5 km/h
+                    </div>
+                    <div data-humidity class="text-gray-600 dark:text-gray-300 text-lg">
+                        <i class="fas fa-tint mr-2"></i>65%
+                    </div>
+                </div>
+            </div>
+            <!-- Weekly Forecast -->
+            <div class="weekly-forecast mt-6 grid grid-cols-7 gap-2">
+                <!-- Week days will be populated by JS -->
+            </div>
+        </div>
+
+            
+            <!-- Lower Section - Gray Background -->
+            <div class="bg-gray-100 dark:bg-gray-700 p-7 dark:text-white transition-all duration-300">
+                <div class="text-center mb-4 ">
+                    <div class="current-time text-2xl">14:30</div>
+                    <div class="current-date text-sm text-gray-700">Monday, January 15</div>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mb-1 text-center">
+                    <div class="text-base" data-temp-details>Temperature: 24°C</div>
+                    <div class="text-base" data-humidity-details>Humidity: 65%</div>
+                    <div class="text-base" data-wind-details>Wind: 5 km/h</div>
+                    <div class="text-base" data-cloud-details>Clouds: Partly Cloudy</div>
+                </div>
+                <br>
+                <!-- Hourly Forecast -->
+                <div class="rounded-full dark:bg-gray-800 hourly-forecast grid grid-cols-4 gap-2 transition-all duration-300 shadow-lg">
+                    <!-- Hourly forecasts will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="script.js"></script>
+</body>
+</html>
