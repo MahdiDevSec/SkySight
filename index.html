@@ -31,7 +31,7 @@
                 class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 rounded-lg hover:from-blue-500 hover:to-blue-700 transition-all duration-300 shadow-md"
                 title="Auto locate"
             >
-                <i class="fas fa-location-arrow"></i>
+                <i class="fa-solid fa-location-dot text-lg"></i>
             </button>
              <!-- New dark mode toggle button -->
             <button 
@@ -41,11 +41,12 @@
                 <i class="fas fa-moon dark:text-white"></i>
             </button>
         </div>
+	<div id="suggestions" class="absolute bg-white dark:bg-gray-800 w-64 mt-2 rounded-lg shadow-lg z-10 hidden"></div>
     </div>
     
     <div class="container mx-auto max-w-4xl dark:bg-gray-800 dark:text-white transition-all duration-300">
         <!-- Weather Card Container -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl transition-all duration-300 overflow-hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl transition-all duration-300 overflow-hidden dark:shadow-md dark:shadow-white">
         <!-- Upper Section - White Background -->
         <div class="p-6 dark:text-white">
             <div class="flex justify-center items-center gap-8">
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <!-- Weekly Forecast -->
-            <div class="weekly-forecast mt-6 grid grid-cols-7 gap-2">
+            <div class="weekly-forecast mt-6 grid grid-cols-7 gap-4">
                 <!-- Week days will be populated by JS -->
             </div>
         </div>
@@ -70,17 +71,20 @@
             <div class="bg-gray-100 dark:bg-gray-700 p-7 dark:text-white transition-all duration-300">
                 <div class="text-center mb-4 ">
                     <div class="current-time text-2xl">14:30</div>
-                    <div class="current-date text-sm text-gray-700">Monday, January 15</div>
+                    <div class="current-date text-sm text-gray-700 dark:text-white transition-all duration-300">Monday, January 15</div>
+		    <div id="cityName" class="text-lg font-bold mt-5  dark:text-white"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-3 mb-1 text-center">
                     <div class="text-base" data-temp-details>Temperature: 24°C</div>
                     <div class="text-base" data-humidity-details>Humidity: 65%</div>
                     <div class="text-base" data-wind-details>Wind: 5 km/h</div>
                     <div class="text-base" data-cloud-details>Clouds: Partly Cloudy</div>
+			
+    <br>
                 </div>
                 <br>
                 <!-- Hourly Forecast -->
-                <div class="rounded-full dark:bg-gray-800 hourly-forecast grid grid-cols-4 gap-2 transition-all duration-300 shadow-lg">
+                <div class="rounded-full dark:bg-gray-800 hourly-forecast grid grid-cols-4 gap-2 transition-all duration-300 shadow-lg dark:shadow-md dark:shadow-white">
                     <!-- Hourly forecasts will be populated by JS -->
                 </div>
             </div>
@@ -89,5 +93,6 @@
     
     
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
