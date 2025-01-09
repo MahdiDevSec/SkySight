@@ -119,12 +119,11 @@ function getUserLocation() {
     });
 }
 
+
 // Update UI Functions
 function updateWeatherCard(data) {
-
-	// عرض اسم المدينة
-    document.getElementById('cityName').textContent = data.location.name;
-	
+    //City Name	
+    document.getElementById('cityName').textContent = data.location.name;	
 
     // Main temperature
     document.querySelector('.temperature-display').textContent = `${Math.round(data.current.temp_c)}°C`;
@@ -152,7 +151,7 @@ function updateWeatherCard(data) {
     // Weekly and hourly forecasts
     if (data.forecast && data.forecast.forecastday) {
         updateWeeklyForecast(data.forecast.forecastday);
-        updateHourlyForecast(data.forecast.forecastday[0].hour);
+        updateHourlyForecast(data.forecast.forecastday[0].hour, data.forecast.forecastday);
     }
 }
 
@@ -160,14 +159,14 @@ function updateWeeklyForecast(forecastData) {
     const weeklyContainer = document.querySelector('.weekly-forecast');
     if (weeklyContainer) {
         weeklyContainer.innerHTML = forecastData.map(day => `
-            <div class="forecast-item text-center bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow dark:shadow dark:shadow-gray-400">
-                <div class="text-sm">${new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}</div>
-                <div class="font-bold text-xl">${Math.round(day.day.avgtemp_c)}°C</div>
-                <div class="flex justify-center gap-4 mt-2">
-                    <div class="text-sm">
+            <div class="forecast-item text-center bg-gray-100 dark:bg-gray-700 p-2 sm:p-4 rounded-lg shadow dark:shadow dark:shadow-gray-400">
+                <div class="text-sm sm:text-base">${new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}</div>
+                <div class="font-bold text-xl sm:text-2xl">${Math.round(day.day.avgtemp_c)}°C</div>
+                <div class="flex flex-col sm:flex-row justify-center gap-1 sm:gap-2 mt-2">
+                    <div class="text-xs sm:text-sm">
                         <i class="fas fa-wind"></i> ${day.day.maxwind_kph} km/h
                     </div>
-                    <div class="text-sm">
+                    <div class="text-xs sm:text-sm">
                         <i class="fas fa-tint"></i> ${day.day.avghumidity}%
                     </div>
                 </div>
@@ -175,16 +174,28 @@ function updateWeeklyForecast(forecastData) {
         `).join('');
     }
 }
-
-function updateHourlyForecast(hourlyData) {
+function updateHourlyForecast(hourlyData, forecastData) {
     const hourlyContainer = document.querySelector('.hourly-forecast');
     if (hourlyContainer) {
         const currentHour = new Date().getHours();
-        const nextHours = hourlyData.filter(hour => {
+        let nextHours = [];
+
+        // الساعات المتبقية من اليوم الحالي
+        const remainingHoursToday = hourlyData.filter(hour => {
             const hourTime = new Date(hour.time).getHours();
             return hourTime > currentHour;
-        }).slice(0, 4);
+        });
 
+        // إذا لم يكن هناك ساعات كافية في اليوم الحالي، نضيف ساعات من اليوم التالي
+        if (remainingHoursToday.length < 4) {
+            const hoursNeeded = 4 - remainingHoursToday.length;
+            const nextDayHours = forecastData[1].hour.slice(0, hoursNeeded); // الساعات من اليوم التالي
+            nextHours = [...remainingHoursToday, ...nextDayHours];
+        } else {
+            nextHours = remainingHoursToday.slice(0, 4);
+        }
+
+        // عرض التنبؤات
         hourlyContainer.innerHTML = nextHours.map(hour => `
             <div class="hourly-forecast-item text-center">
                 <div class="text-sm">${new Date(hour.time).toLocaleTimeString('en-US', { hour: '2-digit' })}</div>
